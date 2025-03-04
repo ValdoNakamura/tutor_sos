@@ -1,0 +1,70 @@
+# Node.js & Monorepos
+node_modules/
+**/node_modules/
+lerna-debug.log
+npm-debug.log*
+yarn-error.log*
+.pnp
+.pnp.js
+
+# Directorios de build/cache
+dist/
+build/
+coverage/
+*.log
+.temp/
+
+# Archivos de entorno (credenciales)
+.env
+.env.local
+.env.*.local
+*.pem
+
+# Workspaces específicos (React, Next.js, Expo, React Native, etc.)
+packages/*/dist/
+packages/*/build/
+packages/*/node_modules/
+apps/*/node_modules/
+apps/*/dist/
+apps/*/build/
+apps/*/.next/
+apps/*/.vercel/
+apps/*/.nuxt/
+apps/*/out/
+apps/*/.parcel-cache/
+apps/*/.vite/
+apps/*/.eslintcache/
+
+# React Native & Expo
+apps/*/expo/
+apps/*/.expo/
+apps/*/.expo-shared/
+apps/*/android/.gradle/
+apps/*/android/.idea/
+apps/*/android/local.properties
+apps/*/android/app/build/
+apps/*/ios/Pods/
+apps/*/ios/build/
+apps/*/ios/*.xcodeproj/project.xcworkspace/
+apps/*/ios/*.xcodeproj/xcuserdata/
+
+# Archivos generados por Expo
+apps/*/.expo/
+apps/*/.expo-shared/
+apps/*/web-build/
+apps/*/expo-output/
+
+# Public folders (si usas Webpack o Vite)
+apps/*/public/build/
+apps/*/public/static/
+
+# Archivos de configuración locales (opcional)
+apps/*/.env*
+apps/*/next-env.d.ts
+apps/*/tsconfig.tsbuildinfo
+apps/*/.expo-env
+
+# VSCode & OS files
+.vscode/
+.DS_Store
+Thumbs.db

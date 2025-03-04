@@ -1,0 +1,17 @@
+{
+  "name": "tutor_sos",
+  "version": "1.0.0",
+  "private": true,
+  "main": "index.js",
+  "description": "",
+  "author": "",
+  "license": "ISC",
+  "keywords": [],
+  "scripts": {
+    "web": "npm run dev --workspace=apps/web",
+    "mobile": "cd apps/movil && npm run android"
+  },
+  "workspaces": {
+  "packages": ["apps/web", "shared"]
+  }
+}
