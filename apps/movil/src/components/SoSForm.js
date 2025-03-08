@@ -54,14 +54,9 @@ export default function SosForm() {
                     <View style={styles.attachment} />
                 </View>
 
-                <View style={styles.buttonRow}>
-                    <TouchableOpacity style={styles.button}>
-                        <Text style={styles.buttonText}>Enviar</Text>
-                    </TouchableOpacity>
-                    <TouchableOpacity style={styles.button}>
-                        <Text style={styles.buttonText}>Cancelar</Text>
-                    </TouchableOpacity>
-                </View>
+                <TouchableOpacity style={styles.button}>
+                    <Text style={styles.buttonText}>Enviar</Text>
+                </TouchableOpacity>
             </View>
         </>
     );
@@ -118,13 +113,7 @@ const styles = {
         backgroundColor: "#5A2424",
         borderRadius: 5,
     },
-    buttonRow: {
-        flexDirection: "row",
-        justifyContent: "space-around",
-        marginVertical: 20
-    },
     button: {
-        width: 110,
         height: 50,
         alignItems: "center",
         justifyContent: "center",

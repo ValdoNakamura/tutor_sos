@@ -2,11 +2,11 @@ import { createMaterialTopTabNavigator } from '@react-navigation/material-top-ta
 import { StyleSheet, View } from 'react-native';
 import { getFocusedRouteNameFromRoute } from '@react-navigation/native';
 
-import TabNav from "../../components/TabNav";
-import Home from "../../screens/start/Home";
+import TabNav from '../../components/TabNav';
+import Home from '../../screens/start/Home';
 import RequestNav from './request/RequestNav';
+import Account from '../../screens/user/Account';
 
-//import Header from '../../components/Header';
 
 const Material = createMaterialTopTabNavigator();
 
@@ -14,6 +14,7 @@ export default function TabNavigate() {
     const tabs = [
         { id: 1, title: 'Home', screen: 'home', icon: 'home', Component: Home },
         { id: 2, title: 'Request', screen: 'requestlist', icon: 'mail', Component: RequestNav },
+        { id: 3, title: 'Account', screen: 'account', icon:'person-outline', Component: Account}
     ];
 
     const getTabBarStyle = (route) => {

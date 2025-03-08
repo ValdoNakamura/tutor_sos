@@ -1,10 +1,11 @@
 import { NavigationContainer } from "@react-navigation/native";
-import TabNavigation from "./private/TabNavigation";
+import PrincipalNav from "./principal/PrincipalNav";
+
 
 export default function MainNavigation() {
     return (
         <NavigationContainer>
-            <TabNavigation/>
+            <PrincipalNav/>
         </NavigationContainer>
     )
 } 
