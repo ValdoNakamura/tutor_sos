@@ -1,10 +1,10 @@
-import SosForm from "../../components/FormRequest";
+import FormRequest from "../../components/FormRequest";
 
 const Home = () => {
     return (
         <>
             <section className="flex justify-center">
-                <SosForm/>
+                <FormRequest/>
             </section>
         </>
     )

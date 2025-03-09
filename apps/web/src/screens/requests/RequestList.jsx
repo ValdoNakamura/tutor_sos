@@ -1,12 +1,12 @@
 import React from 'react'
 import Card from '../../components/Card'
+import CardIcon from '../../components/CardIcon'
 
 
 const RequestList = () => {
     return (
         <>
-            <section className="flex flex-wrap w-full pt-5 pl-5 gap-5">
-                <Card/>
+            <section className="flex flex-wrap w-full pt-5 justify-center gap-5">
                 <Card/>
                 <Card/>
                 <Card/>

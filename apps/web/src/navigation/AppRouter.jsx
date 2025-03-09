@@ -7,9 +7,8 @@ import NavBar from "../components/NavBar";
 import Home from "../screens/inicio/Home";
 import TableUsers from "../screens/TableUsers";
 import UserInfo from "../screens/perfil/UserInfo";
-import RequestList from "../screens/requests/RequestList";
 import Register from "../screens/Register";
-import RequestInfo from "../screens/requests/RequestInfo";
+import NavigationApp from "./inicio/NaviagationApp";
 
 
 const PrivateRoute = ({ children }) => {
@@ -34,15 +33,12 @@ const AppRouter = () => {
 
                 <Route path="/" element={<PrivateRoute><NavBar/></PrivateRoute>}>
                     <Route index element={<Home />} /> 
-                    <Route path="peticiones" element={<Outlet/>}>
-                        <Route index element={<RequestList/>}/>
-                        <Route path="requestinfo" element={<RequestInfo/>}/>
-                    </Route>
 
-                    <Route path="grupos" element={<Outlet/>} >
+                    <Route path="peticiones/*" element={<NavigationApp/>}/>
+
+                    <Route path="grupos/*" element={<Outlet/>}>
                         <Route index element={<TableUsers/>}/>
                     </Route>
-
 
                     <Route path="perfil" element={<UserInfo />} />
                 </Route>

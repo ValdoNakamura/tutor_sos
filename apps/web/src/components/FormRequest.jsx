@@ -1,4 +1,4 @@
-const SosForm = () => {
+const FormRequest = () => {
     return (
         <div className="flex items-center justify-center min-h-screen bg-gray-100">
             <div className="bg-[#E5C78A] p-6 rounded-lg shadow-lg w-80">
@@ -30,4 +30,4 @@ const SosForm = () => {
     );
 }  
 
-export default SosForm;
+export default FormRequest;

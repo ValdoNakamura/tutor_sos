@@ -6,26 +6,32 @@ import { register } from '../../../data';
 const RegisterScreen = ({ navigation }) => {
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
-    const [ tipo, setTipo ] = useState("");
+    const [tipo, setTipo] = useState('');
+    const [name, setName] = useState('');
+    const [grupo, setGrupo] = useState('');
     const [error, setError] = useState(null);
 
     const handleRegister = async () => {
         try {
-            const userData = await register(email, password, tipo);
-            console.log('Login exitoso:', userData);
+            const userData = await register(email, password, name, tipo, tipo === "alumno" ? grupo : null);
+            console.log('Registro exitoso:', userData);
             navigation.navigate('inicio');
         } catch (error) {
-            console.error('Error al hacer login:', error);
-            setError('Correo o contraseña incorrectos');
+            console.error('Error al registrar:', error);
+            setError('Hubo un error al registrar la cuenta');
         }
     };
 
     return (
         <SafeAreaView style={styles.container}>
-            <Text style={styles.title}>
-                Registrando una Cuenta
-            </Text>
+            <Text style={styles.title}>Registrando una Cuenta</Text>
             <View style={styles.form}>
+                <TextInput
+                    style={styles.input}
+                    placeholder="Nombre"
+                    value={name}
+                    onChangeText={setName}
+                />
                 <TextInput
                     style={styles.input}
                     placeholder="Correo electrónico"
@@ -45,10 +51,24 @@ const RegisterScreen = ({ navigation }) => {
                     onValueChange={(value) => setTipo(value)}
                     style={styles.inputpicker}
                 >
-                    <Picker.Item label="Selecciona un nombre" value=""/>
+                    <Picker.Item label="Selecciona un rol" value=""/>
                     <Picker.Item label="Maestro" value="maestro"/>
                     <Picker.Item label="Alumno" value="alumno"/>
                 </Picker>
+
+                {/* Picker para seleccionar grupo (solo si el tipo es Alumno) */}
+                {tipo === "alumno" && (
+                    <Picker
+                        selectedValue={grupo}
+                        onValueChange={(value) => setGrupo(value)}
+                        style={styles.inputpicker}
+                    >
+                        <Picker.Item label="Selecciona tu grupo" value=""/>
+                        <Picker.Item label="Grupo A" value="A"/>
+                        <Picker.Item label="Grupo B" value="B"/>
+                        <Picker.Item label="Grupo C" value="C"/>
+                    </Picker>
+                )}
 
                 {error && <Text style={{ color: 'red' }}>{error}</Text>}
                 <TouchableOpacity style={styles.boton} onPress={handleRegister}>
@@ -64,7 +84,6 @@ const RegisterScreen = ({ navigation }) => {
 
 export default RegisterScreen;
 
-
 const styles = StyleSheet.create({
     container: {
         flex: 1,
@@ -78,11 +97,8 @@ const styles = StyleSheet.create({
     },
     form: {
         width: 325,
-        height: 300,
-        justifyContent: "center",
-        backgroundColor: "#EAD196",
         padding: 10,
-        marginHorizontal: 10,
+        backgroundColor: "#EAD196",
         borderRadius: 10
     },
     input: {
@@ -90,26 +106,27 @@ const styles = StyleSheet.create({
         borderColor: 'gray',
         borderWidth: 1,
         marginBottom: 10,
-        borderRadius: 10
+        borderRadius: 10,
+        paddingHorizontal: 10
     },
     inputpicker: {
-        width: 150,
-        color: "black",
-        borderRadius: 20,
+        height: 50,
+        borderRadius: 10,
         borderWidth: 1,
-        borderColor: "black"
+        borderColor: "black",
+        marginBottom: 10
     },
     boton: {
         marginTop: 10,
         height: 50,
         borderRadius: 10,
-        padding: 5,
         alignItems: "center",
         justifyContent: "center",
-        backgroundColor: "#561C24"
+        backgroundColor: "#561C24",
+        padding: 10
     },
     text: {
         fontSize: 20,
         color: "#fff"
     }
-})
+});

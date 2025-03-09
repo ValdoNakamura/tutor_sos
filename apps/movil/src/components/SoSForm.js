@@ -1,7 +1,9 @@
-import { useState } from "react";
-import { View, Text, TextInput, TouchableOpacity } from "react-native";
+import { useState, useEffect } from "react";
+import { View, Text, TextInput, TouchableOpacity, Alert } from "react-native";
 import { Picker } from "@react-native-picker/picker";
 import Icon from "react-native-vector-icons/Ionicons";
+import { SaveRequest } from "../../data/dbfunctions/Functions";
+import { obtenerMaestros } from "../../data/dbfunctions/Functions"; // Asegúrate de importar esta función
 
 const categoryIcons = {
     escuela: "school",
@@ -10,9 +12,41 @@ const categoryIcons = {
     medico: "medkit",
 };
 
-export default function SosForm() {
-    const [nameTutor, setNameTutor] = useState("");
-    const [category, setCategory] = useState("escuela");
+export default function SosForm({ navigation }) {
+    const initialState = {
+        tutor: '',
+        descripcion: '',
+        category: '',
+        state: 'pendiente'
+    };
+
+    const [state, setState] = useState(initialState);
+    const [maestros, setMaestros] = useState([]); // Estado para los maestros
+
+    // Función para manejar los cambios en los campos de texto
+    const handleChangeText = (value, name) => {
+        setState({ ...state, [name]: value });
+    };
+
+    // Función para manejar el guardado de la solicitud
+    const handleSave = async () => {
+        try {
+            await SaveRequest(state);
+            Alert.alert('Alerta', 'Petición enviada');
+            setState(initialState);
+        } catch (error) {
+            console.error(error);
+        }
+    };
+
+    // Obtener los maestros cuando el componente se monta
+    useEffect(() => {
+        const fetchMaestros = async () => {
+            const maestrosList = await obtenerMaestros();
+            setMaestros(maestrosList); // Actualiza el estado con la lista de maestros
+        };
+        fetchMaestros();
+    }, []);
 
     return (
         <>
@@ -21,27 +55,37 @@ export default function SosForm() {
             <View style={styles.form}>
                 <Text style={styles.label}>Tutor</Text>
                 <Picker
-                    selectedValue={nameTutor}
-                    onValueChange={(value) => setNameTutor(value)}
+                    selectedValue={state.tutor}
+                    onValueChange={(value) => handleChangeText(value, "tutor")}
                     style={styles.inputpicker}
                 >
-                    <Picker.Item label="Selecciona un nombre" value=""/>
-                    <Picker.Item label="Sergio Ulises Galvan" value="Sergio Ulises Galvan"/>
-                    <Picker.Item label="Victor Hugo Sanchez" value="Victor Hugo Sanchez"/>
-                    <Picker.Item label="Naruto Uzumaki" value="Naruto Uzumaki"/>
+                    <Picker.Item label="Selecciona un nombre" value="" />
+                    {maestros.map((maestro) => (
+                        <Picker.Item 
+                            key={maestro.id} 
+                            label={maestro.name}  // Asume que 'nombre' es el campo que contiene el nombre del maestro
+                            value={maestro.id} 
+                        />
+                    ))}
                 </Picker>
 
                 <Text style={styles.label}>Descripción</Text>
-                <TextInput style={styles.input} multiline placeholder="Escribe aquí..." placeholderTextColor="#fff" />
+                <TextInput
+                    onChangeText={(value) => handleChangeText(value, "descripcion")}
+                    style={styles.input}
+                    multiline
+                    placeholder="Escribe aquí..."
+                    placeholderTextColor="#fff"
+                />
 
                 <View style={styles.row}>
                     <View>
                         <Text style={styles.label}>Categoría</Text>
                         <View style={styles.category}>
-                            <Icon name={categoryIcons[category]} size={30} color="#fff" />
+                            <Icon name={categoryIcons[state.category] || "help-circle"} size={30} color="#fff" />
                             <Picker
-                                selectedValue={category}
-                                onValueChange={(value) => setCategory(value)}
+                                selectedValue={state.category}
+                                onValueChange={(value) => handleChangeText(value, "category")}
                                 style={styles.hiddenPicker}
                             >
                                 <Picker.Item label="Escuela" value="escuela" />
@@ -54,7 +98,7 @@ export default function SosForm() {
                     <View style={styles.attachment} />
                 </View>
 
-                <TouchableOpacity style={styles.button}>
+                <TouchableOpacity onPress={handleSave} style={styles.button}>
                     <Text style={styles.buttonText}>Enviar</Text>
                 </TouchableOpacity>
             </View>
